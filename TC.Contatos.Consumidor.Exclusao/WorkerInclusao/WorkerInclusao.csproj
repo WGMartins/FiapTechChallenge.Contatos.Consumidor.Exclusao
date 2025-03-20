@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-WorkerInclusao-721d7922-d270-4f49-aa95-9c3c4f0eb1ca</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TC.Contatos.Consumidor.Exclusao.Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\TC.Contatos.Consumidor.Exclusao.UseCase\UseCase.csproj" />
+  </ItemGroup>
+</Project>

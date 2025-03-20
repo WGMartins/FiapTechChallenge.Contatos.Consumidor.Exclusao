@@ -1,0 +1,57 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main", "feature/Monitoramento" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    permissions: write-all
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore ./TechChallenge/TechChallenge.Api/TechChallenge.Api.csproj
+      
+    - name: Build
+      run: dotnet build --no-restore ./TechChallenge/TechChallenge.Api/TechChallenge.Api.csproj
+      
+    - name: Unit Test
+      run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" ./TechChallenge/TechChallenge.UnitTest/TechChallenge.UnitTest.csproj
+      
+    - name: Integration Test
+      run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" ./TechChallenge/TechChallenge.IntegrationTest/TechChallenge.IntegrationTest.csproj
+      
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1.9.1
+      if: always()
+      with:
+          name: Test Report
+          path: "${{ github.workspace }}/**/*.trx"
+          reporter: dotnet-trx
+
+    - name: Upload Test Result Files
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: ${{ github.workspace }}/**/TestResults/**/*
+        retention-days: 5
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2.16.1
+      if: always()
+      with:
+        trx_files: "${{ github.workspace }}/**/*.trx"
