@@ -1,16 +1,14 @@
 using Domain.Interfaces;
-using Domain.RegionalAggregate;
-using UseCase.ContatoUseCase.Remover;
 using UseCase.Interfaces;
 
-namespace WorkerInclusao
+namespace Worker
 {
-    public class Worker : BackgroundService
+    public class WorkerService : BackgroundService
     {
         private readonly IMessageConsumer _messageConsumer;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public Worker(IMessageConsumer messageConsumer,
+        public WorkerService(IMessageConsumer messageConsumer,
                       IServiceScopeFactory scopefactory)
         {
             _messageConsumer = messageConsumer;

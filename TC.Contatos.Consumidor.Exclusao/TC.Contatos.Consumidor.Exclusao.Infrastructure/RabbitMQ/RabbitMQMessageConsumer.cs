@@ -1,10 +1,9 @@
-﻿using Domain.RegionalAggregate;
+﻿using Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
-using Domain.Interfaces;
 
 namespace Infrastructure.RabbitMQ;
 

@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9284AA56
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTest", "TC.Contatos.Consumidor.Exclusao.IntegrationTest\IntegrationTest.csproj", "{6F66E696-798C-4DF4-8A50-F53F9546F1C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerInclusao", "WorkerInclusao\WorkerInclusao.csproj", "{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Worker", "TC.Contatos.Consumidor.Exclusao.Worker\Worker.csproj", "{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

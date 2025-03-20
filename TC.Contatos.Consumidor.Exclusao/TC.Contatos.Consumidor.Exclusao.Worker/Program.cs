@@ -1,5 +1,4 @@
 using Domain.Interfaces;
-using FluentValidation;
 using Infrastructure.RabbitMQ;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Connections;
@@ -8,10 +7,10 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using UseCase.ContatoUseCase.Remover;
 using UseCase.Interfaces;
-using WorkerInclusao;
+using Worker;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<WorkerService>();
 
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -24,7 +23,8 @@ builder.Services.AddScoped<IContatoRepository, ContatoRepository>();
 
 builder.Services.AddScoped<IRemoverContatoUseCase, RemoverContatoUseCase>();
 
-//RabbitMQ
+#region RabbitMQ
+
 builder.Services.AddSingleton<IMessageConsumer, RabbitMQMessageConsumer>();
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
@@ -45,7 +45,8 @@ builder.Services.AddSingleton<Func<Task<IConnection>>>(sp =>
     var factory = sp.GetRequiredService<ConnectionFactory>();
     return () => factory.CreateConnectionAsync();
 });
-//RabbitMQ
+
+#endregion
 
 var host = builder.Build();
 host.Run();

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TC.Contatos.Consumidor.Inclusao.UseCase\UseCase.csproj" />
+    <ProjectReference Include="..\TC.Contatos.Consumidor.Exclusao.UseCase\UseCase.csproj" />
   </ItemGroup>
 
   <ItemGroup>

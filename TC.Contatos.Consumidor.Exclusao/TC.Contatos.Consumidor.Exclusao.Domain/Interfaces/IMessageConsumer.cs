@@ -1,6 +1,4 @@
-﻿using Domain.RegionalAggregate;
-
-namespace Domain.Interfaces;
+﻿namespace Domain.Interfaces;
 
 public interface IMessageConsumer
 {
