@@ -33,20 +33,31 @@ public class RabbitMQMessageConsumer : IMessageConsumer
 
                 consumer.ReceivedAsync += async (sender, eventArgs) =>
                 {
-                    var body = eventArgs.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
-                    var id = JsonSerializer.Deserialize<Guid>(message);
-
-                    if (OnMessageReceived != null)
+                    try
                     {
-                        await OnMessageReceived(id);
+                        var body = eventArgs.Body.ToArray();
+                        var message = Encoding.UTF8.GetString(body);
+                        var id = JsonSerializer.Deserialize<Guid>(message);
+
+                        if (OnMessageReceived != null)
+                        {
+                            await OnMessageReceived(id);
+                            await channel.BasicAckAsync(eventArgs.DeliveryTag, false);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        await channel.BasicNackAsync(eventArgs.DeliveryTag, false, false);
                     }
                 };
 
-                await channel.BasicConsumeAsync(
+                    await channel.BasicConsumeAsync(
                         queue: _settings.Value.Queue,
                         autoAck: true,
                         consumer: consumer);
+
+                Console.WriteLine(" Press [enter] to exit.");
+                Console.ReadLine();
             }
         }
         catch (Exception ex)
