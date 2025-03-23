@@ -5,7 +5,7 @@ name: .NET
 
 on:
   push:
-    branches: [ "main", "feature/Monitoramento" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -24,16 +24,13 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore dependencies
-      run: dotnet restore ./TechChallenge/TechChallenge.Api/TechChallenge.Api.csproj
+      run: dotnet restore ./TC.Contatos.Consumidor.Exclusao/TC.Contatos.Consumidor.Exclusao.Worker/Worker.csproj
       
     - name: Build
-      run: dotnet build --no-restore ./TechChallenge/TechChallenge.Api/TechChallenge.Api.csproj
+      run: dotnet build --no-restore ./TC.Contatos.Consumidor.Exclusao/TC.Contatos.Consumidor.Exclusao.Worker/Worker.csproj
       
     - name: Unit Test
-      run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" ./TechChallenge/TechChallenge.UnitTest/TechChallenge.UnitTest.csproj
-      
-    - name: Integration Test
-      run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" ./TechChallenge/TechChallenge.IntegrationTest/TechChallenge.IntegrationTest.csproj
+      run: dotnet test --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage" ./TC.Contatos.Consumidor.Exclusao/TC.Contatos.Consumidor.Exclusao.UnitTest/UnitTest.csproj
       
     - name: Publish Test Report
       uses: dorny/test-reporter@v1.9.1
