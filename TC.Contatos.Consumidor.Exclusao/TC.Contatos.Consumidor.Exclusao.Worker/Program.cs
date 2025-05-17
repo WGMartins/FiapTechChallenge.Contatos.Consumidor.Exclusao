@@ -12,11 +12,11 @@ using Worker;
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<WorkerService>();
 
-var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseNpgsql(configuration.GetConnectionString("ConnectionString"));
+    options.UseNpgsql(builder.Configuration.GetSection("ConnectionStrings")["ConnectionString"]);
 }, ServiceLifetime.Scoped);
 
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();

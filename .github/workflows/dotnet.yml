@@ -4,10 +4,17 @@
 name: .NET
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+env:
+  REGISTRY_NAME: fiaptechchallenge
+  CLUSTER_NAME: FiapTechChallengeAKS
+  CLUSTER_RESOURCE_GROUP: FiapTechChallenge
+  NAMESPACE: default
 
 jobs:
   build:
@@ -52,3 +59,54 @@ jobs:
       if: always()
       with:
         trx_files: "${{ github.workspace }}/**/*.trx"
+
+    # Connect to Azure Container registry (ACR)
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    # Container build and push to a Azure Container registry (ACR)
+    - run: |
+        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/contatos.consumidor.exclusao.worker:latest -f ./TC.Contatos.Consumidor.Exclusao/Dockerfile 
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/contatos.consumidor.exclusao.worker:latest
+    
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json
+        
+
+    - name: Criar ou atualizar ConfigMap
+      run: |
+          kubectl create configmap configmap-worker \
+            --from-literal=RabbitMQ__HostName=${{ secrets.RABBITMQ__HOSTNAME }} \
+            --from-literal=ConnectionStrings__ConnectionString=${{ secrets.CONNECTIONSTRINGS__CONNECTIONSTRING }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+    
+    # Create imagepullsecret for Azure Container registry (ACR)
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          TC.Contatos.Consumidor.Exclusao/worker-deployment.yml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/contatos.consumidor.exclusao.worker:latest
+        imagepullsecrets: |
+          ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}

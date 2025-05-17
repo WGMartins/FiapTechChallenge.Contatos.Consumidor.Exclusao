@@ -12,17 +12,26 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "TC.Contatos.Consumidor.Exclusao.UnitTest\UnitTest.csproj", "{88605868-F71A-489D-9AD7-8728A2BCBFFC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{DD191B06-8110-4875-9371-F4854BD68B2F}"
-	ProjectSection(SolutionItems) = preProject
-		compose.yml = compose.yml
-		Dockerfile = Dockerfile
-		prometheus.yaml = prometheus.yaml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9284AA56-FB21-46C8-9221-8ED049E8BE27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTest", "TC.Contatos.Consumidor.Exclusao.IntegrationTest\IntegrationTest.csproj", "{6F66E696-798C-4DF4-8A50-F53F9546F1C6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Worker", "TC.Contatos.Consumidor.Exclusao.Worker\Worker.csproj", "{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{6DED2263-0D8C-411A-AC94-70C1578FB932}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{A2D13DBD-EA7E-4FF0-B711-32B0907361BB}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yml = compose.yml
+		prometheus.yaml = prometheus.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{43768985-954A-4C4E-8EB7-7145648EA0B9}"
+	ProjectSection(SolutionItems) = preProject
+		worker-deployment.yml = worker-deployment.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +55,6 @@ Global
 		{88605868-F71A-489D-9AD7-8728A2BCBFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88605868-F71A-489D-9AD7-8728A2BCBFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88605868-F71A-489D-9AD7-8728A2BCBFFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F66E696-798C-4DF4-8A50-F53F9546F1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F66E696-798C-4DF4-8A50-F53F9546F1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F66E696-798C-4DF4-8A50-F53F9546F1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F66E696-798C-4DF4-8A50-F53F9546F1C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,8 +68,9 @@ Global
 		{E4F44FB6-4790-443B-AD12-1F999FB694F1} = {DD191B06-8110-4875-9371-F4854BD68B2F}
 		{88C7CC37-695B-4A4F-B502-35842ABAA177} = {DD191B06-8110-4875-9371-F4854BD68B2F}
 		{88605868-F71A-489D-9AD7-8728A2BCBFFC} = {9284AA56-FB21-46C8-9221-8ED049E8BE27}
-		{6F66E696-798C-4DF4-8A50-F53F9546F1C6} = {9284AA56-FB21-46C8-9221-8ED049E8BE27}
 		{50A1EE8E-7D73-40DF-9EC0-BE4195F3803D} = {DD191B06-8110-4875-9371-F4854BD68B2F}
+		{A2D13DBD-EA7E-4FF0-B711-32B0907361BB} = {6DED2263-0D8C-411A-AC94-70C1578FB932}
+		{43768985-954A-4C4E-8EB7-7145648EA0B9} = {6DED2263-0D8C-411A-AC94-70C1578FB932}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {970403D0-EEDC-46A8-B047-1657C0F54435}

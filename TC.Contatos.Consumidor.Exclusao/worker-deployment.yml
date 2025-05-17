@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumidor-exclusao-worker
+  labels:
+    app: consumidor-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumidor-worker
+  template:
+    metadata:
+      labels:
+        app: consumidor-worker
+    spec:
+      containers:
+      - name: consumidor-exclusao-worker
+        image: fiaptechchallenge.azurecr.io/contatos.consumidor.exclusao.worker
+        envFrom:
+          - configMapRef:
+             name: configmap-worker

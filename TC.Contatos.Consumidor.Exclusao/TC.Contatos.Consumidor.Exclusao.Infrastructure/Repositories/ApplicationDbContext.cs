@@ -21,14 +21,6 @@ namespace Infrastructure.Repositories
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .AddJsonFile(Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "../Worker/appsettings.json"))).Build();
-
-                optionsBuilder.UseNpgsql(configuration.GetConnectionString("ConnectionString"));
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -19,10 +19,7 @@ namespace Worker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                await _messageConsumer.ConsumeAsync();
-            }
+            await _messageConsumer.ConsumeAsync();
         }
         private async Task ProcessarMensagem(Guid id)
         {
