@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: consumidor-exclusao-worker
   labels:
-    app: consumidor-worker
+    app: consumidor-exclusao-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: consumidor-worker
+      app: consumidor-exclusao-worker
   template:
     metadata:
       labels:
-        app: consumidor-worker
+        app: consumidor-exclusao-worker
     spec:
       containers:
       - name: consumidor-exclusao-worker
