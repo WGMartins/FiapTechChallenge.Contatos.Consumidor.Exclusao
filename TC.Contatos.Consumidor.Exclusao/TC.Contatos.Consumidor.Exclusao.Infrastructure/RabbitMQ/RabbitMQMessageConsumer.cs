@@ -5,6 +5,7 @@ using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 
+
 namespace Infrastructure.RabbitMQ;
 
 public class RabbitMQMessageConsumer : IMessageConsumer
@@ -52,9 +53,9 @@ public class RabbitMQMessageConsumer : IMessageConsumer
             };
 
             await channel.BasicConsumeAsync(
-                queue: _settings.Value.Queue,
-                autoAck: true,
-                consumer: consumer);
+                    queue: _settings.Value.Queue,
+                    autoAck: false,
+                    consumer: consumer);
         }
         catch (Exception ex)
         {
